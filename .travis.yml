@@ -27,8 +27,7 @@ before_install:
  - cd ../../
 script:
  - source /opt/qt*/bin/qt*-env.sh
- - mkdir build && cd build
- - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ../CMakeLists.txt
+ - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr CMakeLists.txt
  - make
  - make DESTDIR=appdir/ install; find appdir/
  - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
