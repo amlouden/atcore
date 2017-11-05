@@ -31,4 +31,3 @@ script:
 after_success:
  - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
  - curl --upload-file ./atcore*.AppImage https://transfer.sh/atcore-git.$(git rev-parse --short HEAD)-x86_64.AppImage
-
