@@ -1,10 +1,13 @@
 language: cpp
+compiler: gcc
+sudo: require
+
 before_install:
  - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
- - sudo add-apt-repository --yes ppa:beineri/opt-qt561
+ - sudo add-apt-repository --yes ppa:beineri/opt-qt591
  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
  - sudo apt-get update -qq
- - sudo apt-get install build-essential qt56base qt56quickcontrols qt56serialport
+ - sudo apt-get install build-essential qt59base qt59quickcontrols qt59serialport
  - sudo apt-get install -qq g++-4.8
  - export CXX="g++-4.8"
  - wget http://www.cmake.org/files/v3.5/cmake-3.5.0.tar.gz --no-check-certificate
@@ -14,7 +17,18 @@ before_install:
  - sudo make install
  - cd ..
 script:
- - source /opt/qt56/bin/qt56-env.sh
+ - source /opt/qt*/bin/qt*-env.sh
  - mkdir build && cd build
  - cmake ..
  - make
+ - make INSTALL_ROOT=appdir install; find appdir/
+ - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
+ - chmod a+x linuxdeployqt*.AppImage
+ - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
+ - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -bundle-non-qt-libs
+ - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -appimage
+ 
+after_success:
+ - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
+ - curl --upload-file ./atcore*.AppImage https://transfer.sh/atcore-git.$(git rev-parse --short HEAD)-x86_64.AppImage
+
