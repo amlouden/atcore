@@ -24,11 +24,10 @@ before_install:
  - cmake -DCMAKE_INSTALL_PREFIX=/usr ..
  - make
  - sudo make install
- - cd ..
+ - cd ../../
 script:
  - source /opt/qt*/bin/qt*-env.sh
  - mkdir build && cd build
- - mkdir appdir
  - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ../CMakeLists.txt
  - make
  - make DESTDIR=appdir/ install; find appdir/
