@@ -35,7 +35,7 @@ script:
  - find appdir/
  - sudo mv appdir/usr/lib/* /usr/lib/x86_64-linux-gnu/ || true # Workaround for https://github.com/probonopd/linuxdeployqt/issues/160
  - rm -rf appdir/usr/include/ appdir/usr/lib/cmake/ appdir/usr/mkspecs/ # Don't need to ship developer files in AppImage
- - mv appdir/usr/lib/plugins appdir/usr/plugins # linuxdeployqt convention
+ - # mv appdir/usr/lib/plugins appdir/usr/plugins # linuxdeployqt convention
  - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
  - chmod a+x linuxdeployqt*.AppImage
  - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
@@ -44,4 +44,4 @@ script:
  
 after_success:
  - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
- - curl --upload-file ./atcore*.AppImage https://transfer.sh/atcore-git.$(git rev-parse --short HEAD)-x86_64.AppImage
+ - curl --upload-file ./AtCore*.AppImage https://transfer.sh/AtCore-git.$(git rev-parse --short HEAD)-x86_64.AppImage
