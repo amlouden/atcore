@@ -19,9 +19,9 @@ before_install:
 script:
  - source /opt/qt*/bin/qt*-env.sh
  - mkdir build && cd build
- - cmake ..
+ - cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
  - make
- - make INSTALL_ROOT=appdir install; find appdir/
+ - make DESTDIR=appdir install; find appdir/
  - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
  - chmod a+x linuxdeployqt*.AppImage
  - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
