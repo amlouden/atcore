@@ -31,6 +31,7 @@ script:
  - make
  - sudo make install
  - make DESTDIR=appdir/ install; find appdir/
+ - mkdir -p appdir/usr/plugins ; mv appdir/usr/lib/x86_64-linux-gnu/plugins/* appdir/usr/plugins
  - mv appdir/usr/lib/x86_64-linux-gnu/ appdir/usr/lib/ ; rm -rf appdir/usr/lib/x86_64-linux-gnu/
  - find appdir/
  - sudo mv appdir/usr/lib/* /usr/lib/x86_64-linux-gnu/ || true # Workaround for https://github.com/probonopd/linuxdeployqt/issues/160
