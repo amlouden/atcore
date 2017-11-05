@@ -31,6 +31,10 @@ script:
  - make
  - sudo make install
  - make DESTDIR=appdir/ install; find appdir/
+ - mv appdir/usr/lib/x86_64-linux-gnu/ appdir/usr/lib/ ; rm -rf appdir/usr/lib/x86_64-linux-gnu/
+ - sudo mv appdir/usr/lib/*so* /usr/lib/x86_64-linux-gnu/ # Workaround for https://github.com/probonopd/linuxdeployqt/issues/160
+ - rm -rf appdir/usr/include/ appdir/usr/lib/cmake/ appdir/usr/mkspecs/ # Don't need to ship developer files in AppImage
+ - mv appdir/usr/lib/plugins appdir/usr/plugins # linuxdeployqt convention
  - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
  - chmod a+x linuxdeployqt*.AppImage
  - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
